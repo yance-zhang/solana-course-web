@@ -43,7 +43,7 @@ function flatten(text: string, child: any): string {
 }
 
 const ImgRenderer = (props: any) => {
-  return createElement('img', {src: `.${props.src}`});
+  return createElement('img', { src: `.${props.src}` });
 };
 
 const HeadingRenderer = (props: { children: any; level: any }) => {
