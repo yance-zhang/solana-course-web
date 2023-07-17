@@ -42,13 +42,8 @@ function flatten(text: string, child: any): string {
     : Children.toArray(child.props.children).reduce(flatten, text);
 }
 
-const ImgRenderer = (props: { src: string }) => {
-  console.log(props);
-  const src = props.src.replace('.','')
-  const img = createElement('img', {
-    src: `https://raw.githubusercontent.com/Gametaverse/Solana-Asia-Summer-2023/main/s101/Solana-Basic${src}?token=GHSAT0AAAAAACAKU5HYO3XCDRAZXJ3TQTOKZFQY5TA`,
-  });
-  return img;
+const ImgRenderer = (props: any) => {
+  return createElement('img', {src: `.${props.src}`});
 };
 
 const HeadingRenderer = (props: { children: any; level: any }) => {
