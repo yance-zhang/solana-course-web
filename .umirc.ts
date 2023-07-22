@@ -6,6 +6,7 @@ export default defineConfig({
     { path: '/course/:id', component: 'course/detail.tsx' },
   ],
   npmClient: 'yarn',
+  title: 'Solana 中文开发教程',
   tailwindcss: {},
   plugins: [
     '@umijs/plugins/dist/tailwindcss',
