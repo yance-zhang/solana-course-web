@@ -14,11 +14,40 @@
   }
 
   .app-footer {
-    min-height: 180px;
+    // min-height: 180px;
     background-image: url(../assets/images/bg-stars-sm.svg);
     background-color: rgb(10 10 14);
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
+
+    .footer-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 0;
+
+      .media {
+        display: flex;
+        align-items: center;
+        margin: 0 20px;
+        cursor: pointer;
+
+        .label {
+          padding: 0 5px;
+        }
+
+        .anticon {
+          font-size: 26px;
+          padding-right: 2px;
+        }
+      }
+    }
+  }
+}
+
+.qrCode {
+  img {
+    width: 120px;
   }
 }

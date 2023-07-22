@@ -78,7 +78,7 @@ export default function ({
             ></path>
           </svg>
         </h3>
-        <p className="lesson-meta">Video</p>
+        {/* <p className="lesson-meta"></p> */}
       </div>
     </div>
   );

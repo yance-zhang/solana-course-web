@@ -1,5 +1,4 @@
 .course-page {
-
   .course-list {
     margin: 0 auto;
     padding: 1.5rem 1.25rem;
@@ -20,7 +19,7 @@
           padding-right: 1.25rem;
           font-weight: 300;
           text-transform: uppercase;
-          letter-spacing: -.025em;
+          letter-spacing: -0.025em;
           border-right-width: 1px;
           border-color: rgb(193 188 194);
           font-size: 1.25rem;
@@ -38,7 +37,6 @@
       }
 
       .course-lesson-list {
-
         .course-lesson {
           display: flex;
           padding: 1rem;
@@ -60,22 +58,26 @@
             text-align: center;
             border-width: 1px;
             --tw-border-opacity: 1;
-            border-color: rgb(193 188 194/var(--tw-border-opacity));
+            border-color: rgb(193 188 194 / var(--tw-border-opacity));
             --tw-bg-opacity: 1;
-            background-color: rgb(255 255 255/var(--tw-bg-opacity));
+            background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 
-            span, svg {
+            span,
+            svg {
               display: block;
-              margin-left: auto!important;
-              margin-right: auto!important;
-              place-items: center!important;
-              justify-content: center!important;
-              justify-self: center!important;
-              text-align: center!important;
+              margin-left: auto !important;
+              margin-right: auto !important;
+              place-items: center !important;
+              justify-content: center !important;
+              justify-self: center !important;
+              text-align: center !important;
             }
           }
 
           .lesson-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             width: 100%;
             margin-left: 1.25rem;
 
@@ -98,11 +100,11 @@
               }
             }
             .lesson-meta {
-              margin-top: 0.25rem;    
-              font-size: .875rem;
+              margin-top: 0.25rem;
+              font-size: 0.875rem;
               line-height: 1.25rem;
               --tw-text-opacity: 1;
-              color: rgb(136 128 137/var(--tw-text-opacity));
+              color: rgb(136 128 137 / var(--tw-text-opacity));
             }
           }
         }

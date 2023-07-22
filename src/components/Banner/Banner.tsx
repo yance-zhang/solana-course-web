@@ -11,7 +11,7 @@ export default function Banner({
 }) {
   return (
     <div className="banner">
-      <h1>{lessonPage ? title : 'Intro to Solana'}</h1>
+      <h1>{lessonPage ? title : 'Solana中文开发教程'}</h1>
 
       {lessonPage ? (
         <div className="back">
@@ -22,12 +22,10 @@ export default function Banner({
         </div>
       ) : (
         <>
-          <p className="text-base text-gray-500">by Gametaverse</p>
+          {/* <p className="text-base text-gray-500">by Gametaverse</p> */}
 
           <p className="desc max-w-2xl md:text-xl">
-            Welcome to the best starting point for Web Developers looking to
-            learn Web3 Development. Solana&apos;s high speed, low cost, and
-            energy efficiency make it the ideal network to learn on.
+            Solana作为新一代公链的代表，以高性能和低gas费，深受开发者的青睐，为让更多人拥抱区块链打下了坚实的基础。Solana中文开发教程旨在让更多的中文Solana开发者更好地上手在Solana上进行开发，和我们一起，为未来BUIDL!
           </p>
         </>
       )}
