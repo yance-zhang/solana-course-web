@@ -55,7 +55,7 @@ export const CourseMap: TCourseDTO[] = [
   {
     number: 1,
     title: 'Solana 基础知识',
-    locked: false,
+    locked: true,
     lessons: [
       { number: 1, title: 'Solana介绍', meta: [], md: w1l1 },
       { number: 2, title: 'Solana核心概念', meta: [], md: w1l2 },
