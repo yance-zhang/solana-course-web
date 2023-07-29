@@ -163,7 +163,7 @@ export const CourseMap: TCourseDTO[] = [
     lessons: [
       { number: 1, title: 'Cashio 攻击事件分析', meta: [], md: w9l1 },
       { number: 2, title: '经典黑客手段', meta: [], md: w9l2 },
-      { number: 3, title: '合约开发安全注意点', meta: [], md: w9l2 },
+      { number: 3, title: '合约开发安全注意点', meta: [], md: w9l3 },
     ],
   },
 ];
