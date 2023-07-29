@@ -7,7 +7,7 @@ Solana作为一个分布式区块链系统，所有的信息都存储在Account�
 账号信息，合约中存储的内容等都是存储在一个个Account对象中。
 
 Account的定义如下：
-
+```rust
     pub struct Account {
         /// lamports in the account
         pub lamports: u64,
@@ -21,9 +21,11 @@ Account的定义如下：
         /// the epoch at which this account will next owe rent
         pub rent_epoch: Epoch,
     }
-
+```
 其中的lamports表示账号余额，data表示存储的内容，owner表示这个Account可以被谁来操作，类似文件所有者。
 如果是合约账号，这里data的内容就是合约编译后的代码，同时executable为true。
+
+
 
 ## 账号和签名
 Solana的签名系统使用的是 [Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) ,说人话就是：
@@ -46,7 +48,7 @@ Ed25519是一种计算快，安全性高，且生成的签名内容小的一种�
 交易是对多个交易指令的打包，所以起内容主要就是各个交易指令，以及相应指令对应的发起人和签名。
 
 Transaction的定义为：
-
+```rust
     pub struct Message {
         /// The message header, identifying signed and read-only `account_keys`.
         /// Header values only describe static `account_keys`, they do not describe
@@ -94,13 +96,13 @@ Transaction的定义为：
         /// Message to sign.
         pub message: VersionedMessage,
     }
-
+```
 从中可以简单理解为，交易就是一连串的交易指令，以及需要签名的指令的签名内容。
 
 ## 交易指令
 
 上面说到的交易指令又是什么呢？先来看下定义：
-
+```rust
     pub struct CompiledInstruction {
         /// Index into the transaction keys array indicating the program account that executes this instruction.
         pub program_id_index: u8,
@@ -111,12 +113,14 @@ Transaction的定义为：
         #[serde(with = "short_vec")]
         pub data: Vec<u8>,
     }
-
+```
 从这些成员变量名就可以猜到。交易指令就是 执行哪个合约(program_id_index),输入为数据data,执行过程
 中需要用到哪些Account: accounts
 
 类似函数调用一样，program_id_index是函数名，因为合约都是用地址标识的，所以这里指在accounts数组中
 的第几个地址。传入的参数包含两部分，二进制数据data和需要使用到的Account资源：accounts。
+
+![](./assets/images/create_initialize_multiple_ix.svg)
 
 ## 合约
 合约分为两类，一类是普通合约一类是系统合约，前者在Solana中称为"On Chain Program" 
@@ -157,3 +161,24 @@ Transaction的定义为：
 ![](./assets/images/spl_account.png)
 
 ## 租约
+Solana的资金模型中，每个 Solana 账户在区块链上存储数据的费用称为“租金”。 这种基于时间和空间的费用来保持账户及其数据在区块链上的活动为节点提供相应的收入。
+
+所有 Solana 账户（以及计划）都需要保持足够高的 LAMPORT 余额，才能免除租金并保留在 Solana 区块链上。
+
+当帐户不再有足够的 LAMPORTS 来支付租金时，它将通过称为垃圾收集的过程从网络中删除。
+
+注意：租金与交易费用不同。 支付租金（或保存在账户中）以将数据存储在 Solana 区块链上。 而交易费用是为了处理网络上的指令而支付的。
+
+### 租金率
+Solana 租金率是在网络范围内设置的，主要基于每年每字节设置的 LAMPORTS。
+目前，租金率为静态金额并存储在 Rent 系统变量中。
+
+### 免租
+保持最低 LAMPORT 余额超过 2 年租金的账户被视为“免租金”，不会产生租金。
+
+每次账户余额减少时，都会检查该账户是否仍免租金。 导致账户余额低于租金豁免阈值的交易将会失败。
+
+### 垃圾收集
+未保持租金豁免状态或余额不足以支付租金的帐户将通过称为垃圾收集的过程从网络中删除。 完成此过程是为了帮助减少不再使用/维护的数据的网络范围存储。
+
+关于租约的[提案](https://docs.solana.com/implemented-proposals/rent)

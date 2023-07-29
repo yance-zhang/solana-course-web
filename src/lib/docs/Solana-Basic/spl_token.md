@@ -16,7 +16,7 @@ SPL Token是 " Solana Program Library"中的一个组成部分，叫做"Token Pr
 
 SPL Token中，一个代币，仅仅是一个归Token合约管理的普通的Account对象，这个对象里面的二进制数据定义了
 这个代币的基本属性。其结构为：
-
+```rust
     pub struct Mint {
         /// Optional authority used to mint new tokens. The mint authority may only be provided during
         /// mint creation. If no mint authority is present then the mint has a fixed supply and no
@@ -31,15 +31,17 @@ SPL Token中，一个代币，仅仅是一个归Token合约管理的普通的Acc
         /// Optional authority to freeze token accounts.
         pub freeze_authority: COption<Pubkey>,
     }
-
+```
 相对有意义的就是supply表示总共的供应量，decimals表示代币的精度信息。
+
+![](./assets/images/mint_wallet_account.png)
 
 ## SPL Token Account
 
 那么每个用户的拥有的代币数量信息存在哪里呢？
 
 这个合约又定义了一个账号结构，来表示某个地址含有某个代币的数量。
-
+```rust
     pub struct Account {
         /// The mint associated with this account
         pub mint: Pubkey,
@@ -61,12 +63,17 @@ SPL Token中，一个代币，仅仅是一个归Token合约管理的普通的Acc
         /// Optional authority to close the account.
         pub close_authority: COption<Pubkey>,
     }
-
+```
 这里owner表示谁的代币，amount表示代币的数量。
+
+![](./assets/images/spl_account.png)
+
+
+## Account关系
 
 所以整体结构是这样的：
 
-![](./assets/images/spl.png)
+![](./assets/images/spl_pda_account.png)
 
 这两个结构体都是SPL Token Program管理的Account对象，其自身所携带的数据，分别为代币信息，和
 存储哪个代币的信息。

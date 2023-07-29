@@ -15,7 +15,7 @@ import w2l4 from './docs/Interact-With-Solana/exercise.md';
 import w3l1 from './docs/Interact-With-Program/web3.js.md';
 import w3l2 from './docs/Interact-With-Program/interact_with_wallet_adapter.md';
 import w3l3 from './docs/Interact-With-Program/interact_with_token_program.md';
-import w3l4 from './docs/Interact-With-Program/interact_with_wallet_adapter.md';
+import w3l4 from './docs/Interact-With-Program/exercise.md';
 // week 4
 import w4l1 from './docs/Solana-Rust/helloworld.md';
 import w4l2 from './docs/Solana-Rust/language.md';
@@ -26,16 +26,28 @@ import w4l5 from './docs/Solana-Rust/exercise.md';
 import w5l1 from './docs/Solana-Program-Part1/hello_world.md';
 import w5l2 from './docs/Solana-Program-Part1/basic.md';
 import w5l3 from './docs/Solana-Program-Part1/process.md';
-import w5l4 from './docs/Solana-Program-Part1/exercise.md';
+import w5l4 from './docs/Solana-Program-Part1/error.md';
+import w5l5 from './docs/Solana-Program-Part1/exercise.md';
 // week 6
-import w6l4 from './docs/Solana-Program-Part2/ns.md';
+import w6l1 from './docs/Solana-Program-Part2/program_with_vscode.md';
+import w6l2 from './docs/Solana-Program-Part2/pda.md';
+import w6l3 from './docs/Solana-Program-Part2/inner_call.md';
+import w6l4 from './docs/Solana-Program-Part2/sysvar.md';
 import w6l5 from './docs/Solana-Program-Part2/exercise.md';
+
 // week 7
+import w7l1 from './docs/Expert-Solana-Program/alts.md';
+import w7l2 from './docs/Expert-Solana-Program/anchor.md';
+import w7l3 from './docs/Expert-Solana-Program/anchor.md';
 import w7l4 from './docs/Expert-Solana-Program/exercise.md';
 // week 8
-import w8l3 from './docs/Expert-Solana-Program/exercise.md';
+import w8l1 from './docs/Solana-DApp-Practice/exercise.md';
+import w8l2 from './docs/Solana-DApp-Practice/exercise.md';
+import w8l3 from './docs/Solana-DApp-Practice/exercise.md';
 // week 9
 import w9l1 from './docs/Solana-Security/cashio.md';
+import w9l2 from './docs/Solana-Security/cashio.md';
+import w9l3 from './docs/Solana-Security/cashio.md';
 
 export type TLessonDTO = {
   number: number;
@@ -106,8 +118,9 @@ export const CourseMap: TCourseDTO[] = [
     lessons: [
       { number: 1, title: 'Hello World', meta: [], md: w5l1 },
       { number: 2, title: 'Solana合约基础概念', meta: [], md: w5l2 },
-      { number: 3, title: 'Solana合约执行过程', meta: [], md: w5l3 },
-      { number: 4, title: '课后练习', meta: [], md: w5l4 },
+      { number: 3, title: 'Solana合约处理逻辑', meta: [], md: w5l3 },
+      { number: 4, title: 'Solana合约错误定义', meta: [], md: w5l4 },
+      { number: 5, title: '课后练习', meta: [], md: w5l5 },
     ],
   },
   {
@@ -115,10 +128,10 @@ export const CourseMap: TCourseDTO[] = [
     locked: true,
     title: 'Solana合约开发 Part.2',
     lessons: [
-      { number: 1, title: '新的版本化交易', meta: [], md: w1l1 },
-      { number: 2, title: 'Lookup Table', meta: [], md: w1l1 },
-      { number: 3, title: '系统变量', meta: [], md: w1l1 },
-      { number: 4, title: 'NameService合约走读', meta: [], md: w6l4 },
+      { number: 1, title: '使用VS Code开发合约', meta: [], md: w6l1 },
+      { number: 2, title: 'PDA账号', meta: [], md: w6l2 },
+      { number: 3, title: '合约间调用CPI', meta: [], md: w6l3 },
+      { number: 4, title: '系统变量', meta: [], md: w6l4 },
       { number: 5, title: '课后练习', meta: [], md: w6l5 },
     ],
   },
@@ -127,9 +140,9 @@ export const CourseMap: TCourseDTO[] = [
     locked: true,
     title: 'Solana合约开发进阶',
     lessons: [
-      { number: 1, title: 'Solana序列化标准Anchor协议', meta: [], md: w1l1 },
-      { number: 2, title: '合约间调用', meta: [], md: w1l1 },
-      { number: 3, title: 'Solana合约执行过程', meta: [], md: w1l1 },
+      { number: 1, title: 'ALTs 交易', meta: [], md: w7l1 },
+      { number: 2, title: 'Solana序列化标准Anchor协议', meta: [], md: w7l2 },
+      { number: 3, title: 'Solana的NFT事实标准Metaplex', meta: [], md: w7l3 },
       { number: 4, title: '课后练习', meta: [], md: w7l4 },
     ],
   },
@@ -138,8 +151,8 @@ export const CourseMap: TCourseDTO[] = [
     locked: true,
     title: 'Solana DApp开发实践 DeFi & NFT',
     lessons: [
-      { number: 1, title: 'TokenSwap合约走读', meta: [], md: w1l1 },
-      { number: 2, title: '合约间调用', meta: [], md: w1l1 },
+      { number: 1, title: 'TokenSwap合约走读', meta: [], md: w8l1 },
+      { number: 2, title: 'Metaplex合约走读', meta: [], md: w8l2 },
       { number: 3, title: '课后练习', meta: [], md: w8l3 },
     ],
   },
@@ -147,6 +160,10 @@ export const CourseMap: TCourseDTO[] = [
     number: 9,
     locked: true,
     title: 'Solana合约安全',
-    lessons: [{ number: 1, title: 'Cashio 攻击事件分析', meta: [], md: w9l1 }],
+    lessons: [
+      { number: 1, title: 'Cashio 攻击事件分析', meta: [], md: w9l1 },
+      { number: 2, title: '经典黑客手段', meta: [], md: w9l2 },
+      { number: 3, title: '合约开发安全注意点', meta: [], md: w9l2 },
+    ],
   },
 ];

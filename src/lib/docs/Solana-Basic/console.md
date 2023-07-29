@@ -10,7 +10,7 @@
 ## 安装
 
 打开命令行，输入：
-
+```bash  
     sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
 
     downloading stable installer
@@ -21,14 +21,16 @@
     Close and reopen your terminal to apply the PATH changes or run the following in your existing shell:
 
     export PATH="/Users/you/.local/share/solana/install/active_release/bin:$PATH"
-
+```
 
 这里需要科学上网，大家自行处理。
 
 按照提示设置好Path，就可以验证是否安装成功了：
-
+```bash
     ~ % solana --version
     solana-cli 1.14.20 (src:cd1c6d0d; feat:1879391783)
+```
+
 
 这里打印出来cli的版本号。
 
@@ -44,6 +46,7 @@ Solana的网络环境分成开发网、测试网、主网三类，开发网为So
 
 这里我们使用测试网，测试网可以申请空投测试币。
 
+```bash
     solana config set --url https://api.testnet.solana.com
     
     Config File: /Users/you/.config/solana/cli/config.yml
@@ -51,11 +54,13 @@ Solana的网络环境分成开发网、测试网、主网三类，开发网为So
     WebSocket URL: wss://api.testnet.solana.com/ (computed)
     Keypair Path: /Users/you/.config/solana/id.json
     Commitment: confirmed
+```
+
 
 ## 创建账号
 
 执行：
-
+```bash
     solana-keygen new --force
     Generating a new keypair
 
@@ -73,45 +78,47 @@ Solana的网络环境分成开发网、测试网、主网三类，开发网为So
     Save this seed phrase and your BIP39 passphrase to recover your new keypair:
     pistol note gym mesh public endless salt maximum ...
     ========================================================================
+```
 
 这里设置好密码后，提示keypair被加密存在存在"/Users/you/.config/solana/id.json"。
 同时其对应的BIP39的助记词为：
-
+```bash
     pistol note gym mesh public endless salt maximum ...
+```
 
 对应的地址：5pWae6RxD3zrYzBmPTMYo1LZ5vef3vfWH6iV3s8n6ZRG
 
 这里助记词要记住，后续使用钱包的时候，可以通过助记词来恢复账号。
 
 通过如下命令可以查看当前账号的地址，也就是上面的Keypair文件的中的公钥：
-
+```bash
     solana-keygen pubkey
     5pWae6RxD3zrYzBmPTMYo1LZ5vef3vfWH6iV3s8n6ZRG
-
+```
 ## 申请水龙头
 只有开发网和测试网可以申请水龙头币，这里可以通过命令行：
-
+```bash
     solana airdrop 1
     Requesting airdrop of 1 SOL
 
     Signature: 4xYKfGjWcLir8F6puSzVWafbqYhjSyESNKygPygia6RgomSJACy5MhoKXhiePtz6VQ5W8DxYF5baeB4Cf9oKnkqy
 
     1 SOL
-
+```
 提示申请1个SOL成功。通过命令
-
+```bash
     solana balance
     1 SOL
-
+```
 可以查看当前账号的余额。当前账号也就是"/Users/you/.config/solana/id.json"中存储的keypair对应的账号。
 
 ## 转账
 这里通过命令行给另一个账号转账：
-
+```bash
     solana transfer --allow-unfunded-recipient CZmVK1DymrSVWHiQCGXx6VG5zgHVrh5J1P514jHKRDxA 0.01
 
     Signature: 3wDKwR1GFiKoUzmNJSdTYaoKp5n5fYxNCD712V9Vpj15M6UyK2A2Gtvb8GaiaGHoA8GJki8rqTuCuHnsWiGej7rV
-
+```
 
 如果这个账号之前不存在，需要使用--allow-unfunded-recipient来进行创建。这里输出的交易hash，我们可以
 在浏览器中看到结果。 
