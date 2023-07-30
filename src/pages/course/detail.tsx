@@ -3,9 +3,9 @@ import { CourseMap, TLessonDTO } from '@/lib/constants';
 import { useEffect, useState } from 'react';
 import { history, useParams } from 'umi';
 import './detail.less';
-import loadable from '@loadable/component'
+import loadable from '@loadable/component';
 
-const Article = loadable(async () => import('@/components/ArticleContent'))
+const Article = loadable(async () => import('@/components/ArticleContent'));
 
 export default function CourseLesson() {
   const params = useParams();
@@ -18,9 +18,15 @@ export default function CourseLesson() {
       return;
     }
     const [courseId, lessonId] = params.id.split('-');
-    const target = CourseMap.find(
-      (c) => c.number === Number(courseId),
-    )?.lessons.find((l) => l.number === Number(lessonId));
+    const targetCourse = CourseMap.find((c) => c.number === Number(courseId));
+    if (targetCourse?.locked) {
+      history.push('/');
+      return;
+    }
+    const target = targetCourse?.lessons.find(
+      (l) => l.number === Number(lessonId),
+    );
+
     setLesson(target);
 
     fetch(target?.md)

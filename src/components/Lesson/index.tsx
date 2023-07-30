@@ -54,11 +54,7 @@ export default function ({
           <span>{lesson.number}</span>
         )}
       </button>
-      <div
-        className={`lesson-info ${
-          course.locked && course.number !== 1 && 'blur-sm'
-        }`}
-      >
+      <div className={`lesson-info ${course.locked && 'blur-sm'}`}>
         <h3
           className="lesson-title"
           onClick={() => {
