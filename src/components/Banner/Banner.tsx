@@ -14,13 +14,14 @@ export default function Banner({
       <h1>{lessonPage ? title : 'Solana中文开发教程'}</h1>
 
       {lessonPage ? (
-        <div className="back">
-          <button className="btn" onClick={() => history.push('/')}>
-            Back to Course
-          </button>
-          <button className="btn share">Share on twitter</button>
-        </div>
+        ''
       ) : (
+        // <div className="back">
+        //   <button className="btn" onClick={() => history.push('/')}>
+        //     Back to Course
+        //   </button>
+        //   <button className="btn share">Share on twitter</button>
+        // </div>
         <>
           {/* <p className="text-base text-gray-500">by Gametaverse</p> */}
 
