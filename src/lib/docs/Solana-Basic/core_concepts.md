@@ -120,7 +120,7 @@ Transaction的定义为：
 类似函数调用一样，program_id_index是函数名，因为合约都是用地址标识的，所以这里指在accounts数组中
 的第几个地址。传入的参数包含两部分，二进制数据data和需要使用到的Account资源：accounts。
 
-![](./assets/images/create_initialize_multiple_ix.svg)
+![](./assets/images/create_initialize_multiple_ix.png)
 
 ## 合约
 合约分为两类，一类是普通合约一类是系统合约，前者在Solana中称为"On Chain Program" 
