@@ -35,7 +35,7 @@
 更新到测试网版本 1.16.x
 
 ```
-solana-install init 1.16.4
+solana-install init 1.16.5
 ```
 
 ## 设置网络环境
