@@ -32,7 +32,14 @@
 ```
 
 
+
 这里打印出来cli的版本号。
+
+更新到1.16.x版本
+
+```
+    solana-install init 1.16.4
+```
 
 ## 设置网络环境
 Solana的网络环境分成开发网、测试网、主网三类，开发网为Solana节点开发使用，更新频繁，测试网主要
@@ -44,14 +51,14 @@ Solana的网络环境分成开发网、测试网、主网三类，开发网为So
 * TestNet: https://api.testnet.solana.com
 * MainNet: https://api.mainnet-beta.solana.com
 
-这里我们使用测试网，测试网可以申请空投测试币。
+这里我们使用开发网，开发网可以申请空投测试币。
 
 ```bash
-    solana config set --url https://api.testnet.solana.com
+    solana config set --url https://api.devnet.solana.com
     
     Config File: /Users/you/.config/solana/cli/config.yml
-    RPC URL: https://api.testnet.solana.com
-    WebSocket URL: wss://api.testnet.solana.com/ (computed)
+    RPC URL: https://api.devnet.solana.com
+    WebSocket URL: wss://api.devnet.solana.com/ (computed)
     Keypair Path: /Users/you/.config/solana/id.json
     Commitment: confirmed
 ```

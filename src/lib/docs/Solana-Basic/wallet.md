@@ -35,7 +35,7 @@ https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkolj
 
 ![](./assets/images/phantom_ui.png)
 
-同时我们还可以选择不同的网络环境，这里我们选择测试网，就可以看到我们前面领的水龙头代币了。
+同时我们还可以选择不同的网络环境，这里我们选择开发网，就可以看到我们前面领的水龙头代币了。
 
 ![](./assets/images/phantom_testnet.png)
 ## 转账
