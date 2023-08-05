@@ -80,7 +80,7 @@ export const CourseMap: TCourseDTO[] = [
   {
     number: 2,
     title: '通过RPC与Solana交互',
-    locked: true,
+    locked: false,
     lessons: [
       { number: 1, title: 'Solana的RPC介绍', meta: [], md: w2l1 },
       { number: 2, title: '接口RPC', meta: [], md: w2l2 },
