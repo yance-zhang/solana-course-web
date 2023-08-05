@@ -27,7 +27,7 @@ HTTP接口是通过JSON RPC的格式对外提供服务，[JSON RPC](https://www.
 以JSSON作为序列化工具，HTTP 作为传输协议的RPC模式，其有多个版本，当前使用的是v2版本。
 
 其请求格式为：
-
+```
     {
         "jsonrpc": "2.0",
         "id": 1,
@@ -36,11 +36,11 @@ HTTP接口是通过JSON RPC的格式对外提供服务，[JSON RPC](https://www.
             "83astBRguLMdt2h5U1Tpdq5tjFoJ6noeGwaY3mDLVcri"
         ]
     }
-
+```
 这里最外层是一个字典，其中各个Key是固定的，其中method表示RPC的函数方法名。params表示该函数的参数。
 
 对应的请求结果为：
-
+```
     {
         "jsonrpc": "2.0",
         "result": {
@@ -48,6 +48,7 @@ HTTP接口是通过JSON RPC的格式对外提供服务，[JSON RPC](https://www.
             },
         "id": 1
     }
+```
 
 同样的，这里的几个字段也是固定的，result表示请求的结果。id和请求里面的id对应，表示的是哪个请求的结果。
 
@@ -62,17 +63,19 @@ HTTP接口是通过JSON RPC的格式对外提供服务，[JSON RPC](https://www.
 同时Solana也对常用的结果做了人为可读的优化。当传递` "encoding":"jsonParsed"`会讲结果尽量以JSON的方式
 返回。encoding和上面的状态放在同一个位置。如：
 
+```
         {
             "commitment":"processed",
             "encoding":"jsonParsed"
         }
+```
 
 ## Websocket接口
 Websocket是HTTP为了补充长链接，而增加一个特性，概括来说就可以认为这个是一条TCP长链接。Solana通过
 这条长连接来给客户端推送消息。
 
 只是这里的消息的内容也是采用了JSONRPC的格式，如：
-
+```
     {
         "jsonrpc": "2.0",
         "id": 1,
@@ -85,11 +88,11 @@ Websocket是HTTP为了补充长链接，而增加一个特性，概括来说就�
             }
         ]
     }
-
+```
 这样的消息订阅了Account("CM78CPUeXjn8o3yroDHxUtKsZZgoy4GPkPPXfouKNH12")的变化消息。
 
 当有变化时，也是将结果打包成一个JSONRPC的格式推送给客户端：
-
+```
     {
         "jsonrpc": "2.0",
         "method": "accountNotification",
@@ -122,5 +125,5 @@ Websocket是HTTP为了补充长链接，而增加一个特性，概括来说就�
             "subscription": 23784
         }
     }
-
+```
 每个Subscribe方法，都对应的有一个Unsubscribe方法，当发送改方法时，服务器后续不再推送消息。
