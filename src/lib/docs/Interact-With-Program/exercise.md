@@ -4,3 +4,4 @@
 > 提示：
 >   1. 通过与Token合约交互，创建代币
 >   2. 通过与Token合约交互，给白名单中的地址，发送SPL Token代币
+>   3. 建议使用SPL-Token提供的库来构建instruction
