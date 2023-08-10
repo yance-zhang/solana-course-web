@@ -245,4 +245,4 @@ payerKey 则是发送这个消息的 gas 付费者，其也需要提供签名。
 
 ## Demo
 
-[web3 ui demo](./assets/files/web3-ui-demo.zip)
+[web3 ui demo](../assets/files/web3-ui-demo.zip)

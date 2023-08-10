@@ -134,4 +134,4 @@
 
 ## Demo
 
-[wallet adapter demo](./assets/files/wallet-adapter-demo.zip)
+[wallet adapter demo](../assets/files/wallet-adapter-demo.zip)

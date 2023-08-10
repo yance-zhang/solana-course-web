@@ -331,4 +331,4 @@ const txInstructions = [
 
 ## Demo
 
-[](./assets/files/spl-token-demo.zip)
+[spl token demo](../assets/files/spl-token-demo.zip)
