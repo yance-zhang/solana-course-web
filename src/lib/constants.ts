@@ -90,7 +90,7 @@ export const CourseMap: TCourseDTO[] = [
   },
   {
     number: 3,
-    locked: true,
+    locked: false,
     title: '与Solana合约交互',
     lessons: [
       { number: 1, title: 'Solana的Web3.js', meta: [], md: w3l1 },
