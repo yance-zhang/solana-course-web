@@ -40,9 +40,9 @@ RPC节点会将相关事件在长连接上推送过来。当前订阅主要分�
 ```
 这里订阅对账号的变化的事件，我们通过wscat来模拟：
 ```
-    wscat -c wss://api.testnet.solana.com
+    wscat -c wss://api.devnet.solana.com
     Connected (press CTRL+C to quit)
-    > {"jsonrpc":"2.0","id":1,"method":"accountSubscribe","params":["CnjrCefFBHmWnKcwH5T8DFUQuVEmUJwfBL3Goqj6YhKw",{"encoding":"jsonParsed","commitment":"finalized"}]}
+    > {"jsonrpc":"2.0","id":1,"method":"accountSubscribe","params":["EZhhUANUMKsRhRMArczio1kLc9axefTUAh5xofGX35AK",{"encoding":"jsonParsed","commitment":"finalized"}]}
     < {"jsonrpc":"2.0","result":3283925,"id":1}
 ```
 然后我们在另外一个终端里面进行转账：
@@ -94,7 +94,7 @@ RPC节点会将相关事件在长连接上推送过来。当前订阅主要分�
 
 比如这里我们订阅我们的一个ATA的账号：
 ```
-    wscat -c wss://api.testnet.solana.com
+    wscat -c wss://api.devnet.solana.com
     Connected (press CTRL+C to quit)
     > {"jsonrpc":"2.0","id":1,"method":"logsSubscribe","params":[{"mentions":["CdJp6W7S8muM85UXq7u2P42ryytDacqEo8JgoHENSiUi"]},{"commitment":"finalized"}]}
     < {"jsonrpc":"2.0","result":610540,"id":1}
@@ -110,7 +110,7 @@ RPC节点会将相关事件在长连接上推送过来。当前订阅主要分�
 ```
 可以在事件通知中看到：
 ```
-    wscat -c wss://api.testnet.solana.com
+    wscat -c wss://api.devnet.solana.com
     Connected (press CTRL+C to quit)
     > {"jsonrpc":"2.0","id":1,"method":"logsSubscribe","params":[{"mentions":["CdJp6W7S8muM85UXq7u2P42ryytDacqEo8JgoHENSiUi"]},{"commitment":"finalized"}]}
     < {"jsonrpc":"2.0","result":610540,"id":1}
@@ -141,7 +141,7 @@ RPC节点会将相关事件在长连接上推送过来。当前订阅主要分�
 
 对应的命令
 ```
-    wscat -c wss://api.testnet.solana.com
+    wscat -c wss://api.devnet.solana.com
     Connected (press CTRL+C to quit)
     > {"jsonrpc":"2.0","id":1,"method":"programSubscribe","params":["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",{"encoding":"jsonParsed"}]}
     < {"jsonrpc":"2.0","result":142408,"id":1}
@@ -179,7 +179,7 @@ RPC节点会将相关事件在长连接上推送过来。当前订阅主要分�
 ```
 然后在另外一个终端，迅速建立wscat连接，并订阅该事件：
 ```
-    wscat -c wss://api.testnet.solana.com
+    wscat -c wss://api.devnet.solana.com
     Connected (press CTRL+C to quit)
     > {"jsonrpc":"2.0","id":1,"method":"signatureSubscribe","params":["BfQAbgqQZMfsxFHwh6Hve8yGb843QfZcYtD2j2nN3K1hLHZrQjzdwG9uWgNkGXs4tBNVLE3JAzvNLtwJBt3zDsN",{"commitment":"finalized","enableReceivedNotification":false}]}
     < {"jsonrpc":"2.0","result":3285176,"id":1}
