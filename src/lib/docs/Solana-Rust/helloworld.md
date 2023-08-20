@@ -8,6 +8,7 @@ Rust以3年为一个界限，发布一个大版本，新特性可能不兼容之
 
 通过rustup工具，可以帮助我们一键安装rust开发环境：
 
+```
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
     Current installation options:
@@ -32,16 +33,17 @@ Rust以3年为一个界限，发布一个大版本，新特性可能不兼容之
 
     To configure your current shell, run:
     source "$HOME/.cargo/env"
+```
 
 这里执行下环境导入
-
+```
     source "$HOME/.cargo/env"
-
+```
 然后查看rust版本：
-
+```
     rustc --version
     rustc 1.70.0 (90c541806 2023-05-31)
-
+```
 为当前最新的1.70.0。
 
 
@@ -54,26 +56,26 @@ Rust官方针对不同的IDE都有开发相关插件。比如Vim/Emacs，这里�
 ## 创建工程
 
 创建一个demo目录，用于放工程文件，然后在这个目录中：
-
+```
      cargo new --bin helloworld
      Created binary (application) `helloworld` package
-
+```
 即可创建好项目。项目目录为：
-
+```
     .
     └── helloworld
         ├── Cargo.toml
         └── src
             └── main.rs
-
+```
 然后用VScode打开工程，并打开这里的main.rs。
-
+```
     fn main() {
         println!("Hello, world!");
     }
-
+```
 创建工程到时候，已经默认生成了打印"Hello, world!"。我们修改成:
-
+```
     use std::env;
 
     fn main() {
@@ -83,28 +85,28 @@ Rust官方针对不同的IDE都有开发相关插件。比如Vim/Emacs，这里�
             None => println!("Please use ./hellowolrd name.")
         }
     }
-
+```
 
 通过cargo可以构建：
-
+```
     cargo build
     Compiling helloworld v0.1.0 (Solana-Asia-Summer-2023/s101/Solana-Rust/demo/helloworld)
         Finished dev [unoptimized + debuginfo] target(s) in 0.99s
-
+```
 构建完成后，可执行二进制在：
-
+```
     ./target/debug/helloworld abc
     Hello abc
-
+```
 输入后可以直接执行，得到结果。
 
 也可以直接通过cargo 来执行：
-
+```
     cargo run  abc
     Finished dev [unoptimized + debuginfo] target(s) in 0.00s
     Running `target/debug/helloworld`
     Hello abc
-
+```
 到这里就完成了HelloWorld过程了。
 
 
@@ -113,19 +115,19 @@ Rust官方针对不同的IDE都有开发相关插件。比如Vim/Emacs，这里�
 上面我们对模板代码做了简单修改。模板代码过于简单。所以我们加入了命令行参数并增加了一个其他语言中没有的关键字 `match`。
 
 来看代码开头：
-
+```
     use std::env;
-
+```
 当要使用其他库的时候，首先用`use`来进行导入。这个有点类似其他语言的import/include等。
 
 然后是main函数:
-
+```
     fn main() {
         ...
     }
-
+```
 函数的定义是`fn` 开头，然后跟函数名，以及用()括起来的参数列表，最后是返回值类型，这里因为没有返回值，所以是空。再来看个函数定义：
-
+```
     // Function that returns a boolean value
     fn is_divisible_by(lhs: u32, rhs: u32) -> bool {
         // Corner case, early return
@@ -136,13 +138,13 @@ Rust官方针对不同的IDE都有开发相关插件。比如Vim/Emacs，这里�
         // This is an expression, the `return` keyword is not necessary here
         lhs % rhs == 0
     }
-
+```
 首先用fn表示函数定义。然后函数名为"is_divisible_by"，参数为：`lhs: u32, rhs: u32` 这里又和一些语言不一样了。
 格式为 `参数名 ： 类型` 。最后通过 `->` 分割返回值类型。
 
 这里在函数定义逻辑为：
 
-
+```
         // Corner case, early return
         if rhs == 0 {
             return false;
@@ -150,7 +152,7 @@ Rust官方针对不同的IDE都有开发相关插件。比如Vim/Emacs，这里�
 
         // This is an expression, the `return` keyword is not necessary here
         lhs % rhs == 0
-
+```
     
 这里和普通语言又有点不一样。 对于返回值，可以显示的调用reutrn : `return false;` 
 
