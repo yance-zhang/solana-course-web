@@ -238,3 +238,92 @@ Borsh的默认实现，所以可以直接通过`try_from_slice`方法，将Accou
 相关错误，定义在"error"里面，在"processor"中处理出错的是，直接进行返回。
 
 "lib"作为rust工程的基本结构而存在，里面也可以定义一些脚手架工具函数。
+
+
+## 客户端访问
+
+这里贴上课上客户端访问代码：
+
+```
+// No imports needed: web3, borsh, pg and more are globally available
+
+/**
+ * The state of a greeting account managed by the hello world program
+ */
+class GreetingAccount {
+  counter = 0;
+  constructor(fields: { counter: number } | undefined = undefined) {
+    if (fields) {
+      this.counter = fields.counter;
+    }
+  }
+}
+
+/**
+ * Borsh schema definition for greeting accounts
+ */
+const GreetingSchema = new Map([
+  [GreetingAccount, { kind: "struct", fields: [["counter", "u32"]] }],
+]);
+
+/**
+ * The expected size of each greeting account.
+ */
+const GREETING_SIZE = borsh.serialize(
+  GreetingSchema,
+  new GreetingAccount()
+).length;
+
+// Create greetings account instruction
+const greetingAccountKp = new web3.Keypair();
+const lamports = await pg.connection.getMinimumBalanceForRentExemption(
+  GREETING_SIZE
+);
+const createGreetingAccountIx = web3.SystemProgram.createAccount({
+  fromPubkey: pg.wallet.publicKey,
+  lamports,
+  newAccountPubkey: greetingAccountKp.publicKey,
+  programId: pg.PROGRAM_ID,
+  space: GREETING_SIZE,
+});
+
+// Create greet instruction
+const greetIx = new web3.TransactionInstruction({
+  keys: [
+    {
+      pubkey: greetingAccountKp.publicKey,
+      isSigner: false,
+      isWritable: true,
+    },
+  ],
+  programId: pg.PROGRAM_ID,
+});
+
+// Create transaction and add the instructions
+const tx = new web3.Transaction();
+tx.add(createGreetingAccountIx, greetIx);
+
+// Send and confirm the transaction
+const txHash = await web3.sendAndConfirmTransaction(pg.connection, tx, [
+  pg.wallet.keypair,
+  greetingAccountKp,
+]);
+console.log(`Use 'solana confirm -v ${txHash}' to see the logs`);
+
+// Fetch the greetings account
+const greetingAccount = await pg.connection.getAccountInfo(
+  greetingAccountKp.publicKey
+);
+
+// Deserialize the account data
+const deserializedAccountData = borsh.deserialize(
+  GreetingSchema,
+  GreetingAccount,
+  greetingAccount.data
+);
+
+console.log(
+  `deserializedAccountData.counter :${deserializedAccountData.counter}`
+);
+
+```

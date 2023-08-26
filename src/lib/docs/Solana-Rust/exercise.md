@@ -1,4 +1,5 @@
 # 课后练习
+
 附件中的工程是一个"Tic-Tac-Toe"游戏。
 
 ```
@@ -12,8 +13,7 @@ X, select a space
 
 运行后是这样的一个棋盘。两个玩家依次落子。先排成“横”，“竖”，“斜”一条线的赢。
 
-代码中其他文件忽略，只关注game.rs/board.rs 这两个文件。里面有“TODO”提示。
-在提示的地方填充函数内容。
+代码中其他文件忽略，只关注 game.rs/board.rs 这两个文件。里面有“TODO”提示。在提示的地方填充函数内容。
 
 最后运行`cargo test` 提示测试通过：
 
@@ -52,4 +52,69 @@ test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 `cargo run`可以正常游戏
 
+## 参考答案
+
+board.rs
+
+```
+    pub fn get_size(&self) -> &i32 {
+        // TODO: 返回size
+        &self.size
+    }
+
+    pub fn get_spaces(&self) -> &Vec<i32> {
+        // TODO: 返回spaces
+        &self.spaces
+    }
+
+        pub fn is_space_available(&self, space: &i32) -> bool {
+        // TODO: 调用contains判断 space是否在切片spacees内
+        !self.spaces.contains(space)
+    }
+
+    fn is_space_in_bounds(&self, space: &i32) -> bool {
+        // TODO: 判断space位置是否在棋盘size*size返回内
+        let max_space = self.size * self.size;
+        let min_space = 0;
+        space >= &min_space && space < &max_space
+    }
+
+    pub fn get_available_spaces(&self) -> Vec<i32> {
+        // TODO: 判断棋盘上是否有位置is_space_available
+        // 提示，遍历位置，调用is_space_available方法
+        let all_spaces = 0..self.size * self.size;
+        all_spaces
+            .filter(|space| self.is_space_available(space))
+            .collect()
+    }
+```
+
+game.rs
+
+```
+pub fn find_current_player(board: &Board) -> Marker {
+    // TODO: 根据棋盘当前的棋子，判断下个棋子，是X还是O
+    if board.get_spaces().len() % 2 == 0 {
+        Marker::X
+    } else {
+        Marker::O
+    }
+}
+
+pub fn find_winner(board: &Board) -> Marker {
+    // TODO: 调用is_game_won_by 判断是 X赢了还是O赢了
+    if is_game_won_by(board, &Marker::X) {
+        Marker::X
+    } else if is_game_won_by(board, &Marker::O) {
+        Marker::O
+    } else {
+        Marker::NA
+    }
+}
+
+
+```
+
 [练习工程](../assets/files/tic-tac-toe.zip)
+
+[参考答案](../assets/files/tic-tac-toe-answer.zip)

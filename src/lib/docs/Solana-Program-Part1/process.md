@@ -174,3 +174,136 @@
         greeting_info.serialize(&mut *greeting_account.data.borrow_mut())?;
 
 先将data部分反序列化出来，修改后，在序列化存回去。
+
+
+## 客户端访问
+
+这里贴上客户端示例代码：
+
+```
+// No imports needed: web3, borsh, pg and more are globally available
+import { serialize, deserialize, deserializeUnchecked } from "borsh";
+import { Buffer } from "buffer";
+/**
+ * The state of a greeting account managed by the hello world program
+ */
+class GreetingAccount {
+  counter = 0;
+  constructor(fields: { counter: number } | undefined = undefined) {
+    if (fields) {
+      this.counter = fields.counter;
+    }
+  }
+}
+
+/**
+ * Borsh schema definition for greeting accounts
+ */
+const GreetingSchema = new Map([
+  [GreetingAccount, { kind: "struct", fields: [["counter", "u32"]] }],
+]);
+
+class Assignable {
+  constructor(properties) {
+    Object.keys(properties).map((key) => {
+      return (this[key] = properties[key]);
+    });
+  }
+}
+
+// Our instruction payload vocabulary
+class HelloWorldInstruction extends Assignable {}
+
+// Borsh needs a schema describing the payload
+const helloWorldInstructionSchema = new Map([
+  [
+    HelloWorldInstruction,
+    {
+      kind: "struct",
+      fields: [
+        ["id", "u8"],
+        ["counter", "u32"],
+      ],
+    },
+  ],
+]);
+
+// Instruction variant indexes
+enum InstructionVariant {
+  Greeting = 0,
+}
+
+/**
+ * The expected size of each greeting account.
+ */
+const GREETING_SIZE = borsh.serialize(
+  GreetingSchema,
+  new GreetingAccount()
+).length;
+
+// Create greetings account instruction
+const greetingAccountKp = new web3.Keypair();
+const lamports = await pg.connection.getMinimumBalanceForRentExemption(
+  GREETING_SIZE
+);
+const createGreetingAccountIx = web3.SystemProgram.createAccount({
+  fromPubkey: pg.wallet.publicKey,
+  lamports,
+  newAccountPubkey: greetingAccountKp.publicKey,
+  programId: pg.PROGRAM_ID,
+  space: GREETING_SIZE,
+});
+
+const helloIx = new HelloWorldInstruction({
+  id: InstructionVariant.Greeting,
+  counter: 2,
+});
+
+// Serialize the payload
+const helloSerBuf = Buffer.from(
+  serialize(helloWorldInstructionSchema, helloIx)
+);
+
+// Create greet instruction
+const greetIx = new web3.TransactionInstruction({
+  data: helloSerBuf,
+  keys: [
+    {
+      pubkey: greetingAccountKp.publicKey,
+      isSigner: false,
+      isWritable: true,
+    },
+  ],
+  programId: pg.PROGRAM_ID,
+});
+
+// Create transaction and add the instructions
+const tx = new web3.Transaction();
+tx.add(createGreetingAccountIx, greetIx);
+
+// Send and confirm the transaction
+const txHash = await web3.sendAndConfirmTransaction(pg.connection, tx, [
+  pg.wallet.keypair,
+  greetingAccountKp,
+]);
+console.log(`Use 'solana confirm -v ${txHash}' to see the logs`);
+
+// Fetch the greetings account
+const greetingAccount = await pg.connection.getAccountInfo(
+  greetingAccountKp.publicKey
+);
+
+// Deserialize the account data
+const deserializedAccountData = borsh.deserialize(
+  GreetingSchema,
+  GreetingAccount,
+  greetingAccount.data
+);
+
+console.log(
+  `deserializedAccountData.counter ${deserializedAccountData.counter}`
+);
+
+
+
+```

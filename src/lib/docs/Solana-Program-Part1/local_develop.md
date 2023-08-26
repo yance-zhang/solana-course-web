@@ -9,7 +9,7 @@
 
     solana config get
     Config File: /Users/you/.config/solana/cli/config.yml
-    RPC URL: https://api.testnet.solana.com 
+    RPC URL: https://api.devnet.solana.com 
     WebSocket URL: wss://api.testnet.solana.com/ (computed)
     Keypair Path: /Users/you/.config/solana/id.json 
     Commitment: confirmed 
