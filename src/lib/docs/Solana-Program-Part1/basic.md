@@ -216,28 +216,6 @@ Borsh的默认实现，所以可以直接通过`try_from_slice`方法，将Accou
 因为我们在前端传递的时候，给这个Account的isWritable是true，所以我们合约中修改了Account.data
 部分在合约执行结束时，就会修改链上的相关数据。
 
-## 结构化工程
-上面我们在同一个文件中，安排了一个合约的各个部分。当合约逻辑复杂的时候，我们可以将其一一拆分，
-在书写的时候更清晰。来看token 合约的结构：
-
-    ├── src
-    │   ├── entrypoint.rs
-    │   ├── error.rs
-    │   ├── instruction.rs
-    │   ├── lib.rs
-    │   ├── processor.rs
-    │   └── state.rs
-
-其中"entrypoint" 专门用来定义合约入口函数。
-
-在entrypoint中，最终会调用"processor"里面定义的具体逻辑。对不同的命令进行处理。
-
-在链上要存储的结构数据，如Token账号`pub struct Account`, Token信息 `pub struct Mint `放在
-"state"中，有点类似MVC结构里面的model。
-
-相关错误，定义在"error"里面，在"processor"中处理出错的是，直接进行返回。
-
-"lib"作为rust工程的基本结构而存在，里面也可以定义一些脚手架工具函数。
 
 
 ## 客户端访问
