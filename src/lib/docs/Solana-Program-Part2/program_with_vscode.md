@@ -137,7 +137,7 @@
     use solana_program::instruction;
     use solana_program::pubkey;
 
-    const RPC_ADDR: &str = "https://api.testnet.solana.com";
+    const RPC_ADDR: &str = "https://api.devnet.solana.com";
 
 
     fn main() {

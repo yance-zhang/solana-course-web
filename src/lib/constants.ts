@@ -126,7 +126,7 @@ export const CourseMap: TCourseDTO[] = [
   },
   {
     number: 6,
-    locked: true,
+    locked: false,
     title: 'Solana合约开发 Part.2',
     lessons: [
       { number: 1, title: '使用VS Code开发合约', meta: [], md: w6l1 },
