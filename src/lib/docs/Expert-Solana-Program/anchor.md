@@ -58,7 +58,10 @@ Web2领域，这个是非常low且不工程化的实践，Web2领域有成熟的
 开发团队的一大力作，在今年的Rust China上，他们也做了比较详细的一个分享，当前Borsh已经在性能，支持的语言，
 压缩率上有一个比较好的表现。因此Solana官方实现也很多都采用了Borsh的序列方式。
 
-所以Anchor也改变了他的命题，将其定义为一套开发框架。那么Anchor是不是必须的？当然不是，我们前面介绍
+anchor的官网域名是"https://www.anchor-lang.com/" 是不是跟一个框架有点不搭，对的。其实
+anchor最开始的命题就是序列化方案，或者说一种IDL语言。
+
+后面Anchor也改变了他的命题，将其定义为一套开发框架。那么Anchor是不是必须的？当然不是，我们前面介绍
 的代码组织形式，加上Borsh的能力，其实已经很好的覆盖了Anchor的功能。但是Anchor除了这些功能外，
 还通过IDL对instruction交互协议进行描述，更方便非Rust得语言的接入，比如在钱包测显示交互的内容。
 同时还提供了项目管理如构建，发布等工具，以及合约逻辑结构的框架，方便做客户端接入以及rust客户端和测试。
@@ -123,78 +126,117 @@ anchor init helloworld
     * 通过Anchor 执行的脚本 ([scripts])。 测试脚本在运行锚点测试时运行。 可以使用`anchor run <script_name> `运行自己的脚本。
 
 
+## 构建工程
+
 执行build命令便可以完成对合约的构建：
 
 ```
 anchor build
+
+
+warning: unused variable: `ctx`
+ --> programs/hellowolrd/src/lib.rs:9:23
+  |
+9 |     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+  |                       ^^^ help: if this is intentional, prefix it with an underscore: `_ctx`
+  |
+  = note: `#[warn(unused_variables)]` on by default
+
+warning: `hellowolrd` (lib) generated 1 warning (run `cargo fix --lib -p hellowolrd` to apply 1 suggestion)
+    Finished release [optimized] target(s) in 13m 08s
 ```
 
-## Anchor程序结构
+这里warning可以忽略。
 
+## 测试工程
 
-一个Anchor工程主要包含了
-
-* "declare_id"宏声明的合约地址，用于创建对象的owner
-* #[derive(Accounts)] 修饰的Account对象，用于表示存储和指令
-* "program" 模块，这里面写主要的合约处理逻辑
-
-对应到我们之前的HelloWorld，就是要将state和instruction部分用 ` #[derive(Accounts)] `
-修饰，将process逻辑放到program模块中，并增加一个合约地址的修饰。
-
-### 处理指令
-
-### 自动序列化
-
-### 错误处理
-在我们之前的结构中，我们专门用了error.rs来枚举错误，在Anchor中提供了两类错误
-
-* Anchor自身错误
-* 自定义错误
-
-Anchor自身错误，可以参考具体的[错误码](https://docs.rs/anchor-lang/latest/anchor_lang/error/enum.ErrorCode.html)
-
-自定义错误通过"err!"和"error_code!"宏来抛出和定义：
+执行anchor的测试命令：
 
 ```
-#[program]
-mod hello_anchor {
-    use super::*;
-    pub fn set_data(ctx: Context<SetData>, data: MyAccount) -> Result<()> {
-        if data.data >= 100 {
-            return err!(MyError::DataTooLarge);
-        }
-        ctx.accounts.my_account.set_inner(data);
-        Ok(())
-    }
-}
+'
 
 
+  hellowolrd
+Your transaction signature 5ne8MSmBpWFBnQr5LhuB87Ma2Snz4CvwuMjx4P8pSUCzJtBa5QUrsJkhnfrbaUJFcXJoPn8bx6HS2LLS11SvPurx
+    ✔ Is initialized! (350ms)
 
 
-#[error_code]
-pub enum MyError {
-    #[msg("MyAccount may only hold data below 100")]
-    DataTooLarge
-}
+  1 passing (357ms)
+
+Done in 2.44s.
 ```
 
-Anchor提供了一个类似assert的 `requre!`宏，用于判断条件，并打印错误码，返回错误：
+可以看到这里提示测试通过。
+
+这里测试执行的是哪里的代码呢？又是怎么运行的呢？
+
+其实测试代码在 "tests/hellowolrd.ts"中，他就是一个类似我们自己的前端访问代码。来测试这里的合约：
 
 ```
-  require!(data.data < 100, MyError::DataTooLarge);
+import * as anchor from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
+import { Hellowolrd } from "../target/types/hellowolrd";
+
+describe("hellowolrd", () => {
+  // Configure the client to use the local cluster.
+  anchor.setProvider(anchor.AnchorProvider.env());
+
+  const program = anchor.workspace.Hellowolrd as Program<Hellowolrd>;
+
+  it("Is initialized!", async () => {
+    // Add your test here.
+    const tx = await program.methods.initialize().rpc();
+    console.log("Your transaction signature", tx);
+  });
+});
+
 ```
 
-如果条件不满足，则返回后面的错误。
+这里通过anchor的sdk可以直接导入合约。
+
+那么合约又是怎么来运行的呢？这里其实anchor拉起了一个solana的本地节点，并通过".anchor/test-ledger"下的genesis.json文件作为初始节点信息。
+
+![](./assets/images/top_test.jpg)
+
+这里我们可以看到在运行test的时候，会同时启动一个solana进程。
+
+## 发布合约
+Anchor在build的时候，和 `solana build-sbf` 一样会生成一个私钥，在位置"target/deploy/xxx.json"中，
+后续我们在发布的时候，都是使用的这个私钥对应的地址，作为合约地址。因此我们可以在"lib.rs"中声明我们的
+合约地址
+
+```
+declare_id!("8gDUQtUK65Aaq6gWHTvGJqfjoUW4Nt7GX3LfXnVhnsu8");
+
+```
+
+为了在开发网发布，我们修改Anchor.toml中的provider:
+
+```
+[provider]
+cluster = "devnet"
+```
 
 
-### 合约间调用
+然后执行发布命令即可。
 
-### PDA生成
+```
+anchor deploy
+Deploying cluster: https://api.devnet.solana.com
+Upgrade authority: /home/ubuntu/.config/solana/id.json
+Deploying program "hellowolrd"...
+Program path: ./Solana-Asia-Summer-2023/s101/Expert-Solana-Program/demo/hellowolrd/target/deploy/hellowolrd.so...
+Program Id: 8gDUQtUK65Aaq6gWHTvGJqfjoUW4Nt7GX3LfXnVhnsu8
 
+Deploy success
+```
 
-## 发布和调试
+在浏览器中可以看到合约
 
+![](./assets/images/hellowolrd.png)
 
-## 客户端调用
+对应的数据在
 
-## 改造之前的HelloWorld
+![](./assets/images/helloworld_data.png)
+
+合约为422KB大小。

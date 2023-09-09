@@ -38,8 +38,9 @@ import w6l5 from './docs/Solana-Program-Part2/exercise.md';
 // week 7
 import w7l1 from './docs/Expert-Solana-Program/alts.md';
 import w7l2 from './docs/Expert-Solana-Program/anchor.md';
-import w7l3 from './docs/Expert-Solana-Program/anchor.md';
+import w7l3 from './docs/Expert-Solana-Program/anchor_framework.md';
 import w7l4 from './docs/Expert-Solana-Program/exercise.md';
+import w7l5 from './docs/Expert-Solana-Program/anchor_proj.md';
 // week 8
 import w8l1 from './docs/Solana-DApp-Practice/exercise.md';
 import w8l2 from './docs/Solana-DApp-Practice/exercise.md';
@@ -143,8 +144,9 @@ export const CourseMap: TCourseDTO[] = [
     lessons: [
       { number: 1, title: 'ALTs 交易', meta: [], md: w7l1 },
       { number: 2, title: 'Solana序列化标准Anchor协议', meta: [], md: w7l2 },
-      { number: 3, title: 'Solana的NFT事实标准Metaplex', meta: [], md: w7l3 },
-      { number: 4, title: '课后练习', meta: [], md: w7l4 },
+      { number: 3, title: 'Anchor开发框架', meta: [], md: w7l3 },
+      { number: 4, title: 'Anchor实践', meta: [], md: w7l5 },
+      { number: 5, title: '课后练习', meta: [], md: w7l4 },
     ],
   },
   {

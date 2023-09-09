@@ -190,9 +190,76 @@
     `Transaction: https://explorer.solana.com/tx/${txidV0}?cluster=devnet`,
     );
 
-## 实例：
+## 实例
+以ALT的方式，来组合实现Mint Token的创建
 
-ALT的需求最早是因为Solana的第一次宕机发现的，那次宕机是因为很多dex聚合器，里面聚合调用中集合了
-大量的Account地址（32字节）最后导致超出MTU，而这里检查有问题，导致了crash。
+```
+ const slot = await connection.getSlot();
+    const [lookupTableIx, lookupTableAddress] =
+    await AddressLookupTableProgram.createLookupTable({
+        authority: publicKey,
+        payer: publicKey,
+        recentSlot: slot,
+    });
 
-这里我们就以一个聚合交易为例来做一次实践。
+    const extendIx = await AddressLookupTableProgram.extendLookupTable({
+      payer: publicKey,
+      authority: publicKey,
+      lookupTable: lookupTableAddress,
+      addresses: [
+          publicKey,
+          SystemProgram.programId,
+          mintKeypair.publicKey,
+          TOKEN_PROGRAM_ID
+      ],
+    });
+    
+    const txInstructions = [
+      lookupTableIx,
+      extendIx,
+      SystemProgram.createAccount({
+        fromPubkey: publicKey,
+        newAccountPubkey: mintKeypair.publicKey,
+        space: MINT_SIZE,
+        lamports:lamports,
+        programId: TOKEN_PROGRAM_ID,
+      }),
+      createInitializeMint2Instruction(mintKeypair.publicKey, 
+        9, 
+        publicKey, 
+        publicKey, 
+        TOKEN_PROGRAM_ID)
+    ];
+
+    console.log("txi : ", txInstructions);
+    const {
+      context: { slot: minContextSlot },
+      value: { blockhash, lastValidBlockHeight },
+    } = await connection.getLatestBlockhashAndContext();
+    //let latestBlockhash = await connection.getLatestBlockhash("finalized");
+    enqueueSnackbar(
+      `   ✅ - Fetched latest blockhash. Last Valid Height: 
+      ${lastValidBlockHeight}`
+    );
+    console.log("slot:", minContextSlot);
+    console.log("latestBlockhash:", blockhash);
+
+    const messageV0 = new TransactionMessage({
+      payerKey: publicKey,
+      recentBlockhash: blockhash,
+      instructions: txInstructions,
+    }).compileToV0Message();
+
+    const trx = new VersionedTransaction(messageV0);
+    const signature = await sendTransaction(trx, connection, {
+      minContextSlot,
+      signers:[mintKeypair],
+    });
+    console.log("signature:", signature);
+```
+
+运行后，我们创建Token，并得到交易记录
+
+https://explorer.solana.com/tx/4DFETLv7bExTESy4cGtJ1A7Vd4G8WK2f48hCAhB33i2bc9Kuofbw9y5KeLqBW4gbFHFMA4RnUgDuzAkcsbrszQRp?cluster=devnet
+
+![](./assets/images/alt_tx.png)
