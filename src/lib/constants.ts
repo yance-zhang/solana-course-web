@@ -136,7 +136,6 @@ export const CourseMap: TCourseDTO[] = [
       { number: 5, title: '课后练习', meta: [], md: w6l5 },
     ],
   },
-  // unreleased
   {
     number: 7,
     locked: false,
@@ -149,6 +148,7 @@ export const CourseMap: TCourseDTO[] = [
       { number: 5, title: '课后练习', meta: [], md: w7l4 },
     ],
   },
+  // unreleased
   {
     number: 8,
     locked: true,
