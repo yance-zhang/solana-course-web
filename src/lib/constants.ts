@@ -139,7 +139,7 @@ export const CourseMap: TCourseDTO[] = [
   // unreleased
   {
     number: 7,
-    locked: true,
+    locked: false,
     title: 'Solana合约开发进阶',
     lessons: [
       { number: 1, title: 'ALTs 交易', meta: [], md: w7l1 },
