@@ -42,8 +42,8 @@ import w7l3 from './docs/Expert-Solana-Program/anchor_framework.md';
 import w7l4 from './docs/Expert-Solana-Program/exercise.md';
 import w7l5 from './docs/Expert-Solana-Program/anchor_proj.md';
 // week 8
-import w8l1 from './docs/Solana-DApp-Practice/exercise.md';
-import w8l2 from './docs/Solana-DApp-Practice/exercise.md';
+import w8l1 from './docs/Solana-DApp-Practice/swap.md';
+import w8l2 from './docs/Solana-DApp-Practice/metaplex.md';
 import w8l3 from './docs/Solana-DApp-Practice/exercise.md';
 // week 9
 import w9l1 from './docs/Solana-Security/cashio.md';
@@ -151,11 +151,11 @@ export const CourseMap: TCourseDTO[] = [
   // unreleased
   {
     number: 8,
-    locked: true,
+    locked: false,
     title: 'Solana DApp开发实践 DeFi & NFT',
     lessons: [
       { number: 1, title: 'TokenSwap合约走读', meta: [], md: w8l1 },
-      { number: 2, title: 'Metaplex合约走读', meta: [], md: w8l2 },
+      { number: 2, title: 'Solana的NFT事实标准Metaplex', meta: [], md: w8l2 },
       { number: 3, title: '课后练习', meta: [], md: w8l3 },
     ],
   },
