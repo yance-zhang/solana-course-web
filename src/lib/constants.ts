@@ -47,8 +47,8 @@ import w8l2 from './docs/Solana-DApp-Practice/metaplex.md';
 import w8l3 from './docs/Solana-DApp-Practice/exercise.md';
 // week 9
 import w9l1 from './docs/Solana-Security/cashio.md';
-import w9l2 from './docs/Solana-Security/cashio.md';
-import w9l3 from './docs/Solana-Security/cashio.md';
+import w9l2 from './docs/Solana-Security/hack.md';
+import w9l3 from './docs/Solana-Security/note.md';
 
 export type TLessonDTO = {
   number: number;
@@ -161,11 +161,11 @@ export const CourseMap: TCourseDTO[] = [
   // unreleased
   {
     number: 9,
-    locked: true,
+    locked: false,
     title: 'Solana合约安全',
     lessons: [
       { number: 1, title: 'Cashio 攻击事件分析', meta: [], md: w9l1 },
-      { number: 2, title: '经典黑客手段', meta: [], md: w9l2 },
+      { number: 2, title: '经典科学家手段', meta: [], md: w9l2 },
       { number: 3, title: '合约开发安全注意点', meta: [], md: w9l3 },
     ],
   },
