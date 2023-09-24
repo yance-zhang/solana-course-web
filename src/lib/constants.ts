@@ -158,7 +158,6 @@ export const CourseMap: TCourseDTO[] = [
       { number: 3, title: '课后练习', meta: [], md: w8l3 },
     ],
   },
-  // unreleased
   {
     number: 9,
     locked: false,
